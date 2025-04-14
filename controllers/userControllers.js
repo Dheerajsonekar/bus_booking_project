@@ -1,5 +1,20 @@
 const db = require('../db/connection');
 
+// Get all user
+exports.getAllUsers= (req, res) =>{
+ const sql = 'SELECT * FROM users';
+ db.query(sql, (err, result)=>{
+  if(err){
+    console.error('Error fetching users:', err);
+    return res.status(500).send('Error fetching users');
+  }
+  if(result.length === 0) return res.status(404).send('No users found');
+  console.log('Users fetched successfully');
+  
+  res.status(200).json(result);
+ })
+}
+
 // Insert User
 exports.createUser = (req, res) => {
   const { name, email } = req.body;

@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const database = require('./db/connection');
 const userRoutes = require('./routes/userRoutes');
+const busRoutes = require('./routes/busRoutes');
 
 
 
@@ -18,7 +19,10 @@ database.getConnection((err, connection)=>{
         connection.release();
 
         app.use('/users', userRoutes);
-        
+        app.use('/buses', busRoutes);
+        app.get('/', (req, res)=>{
+            res.send('Welcome to bus booking system');
+        })
         const PORT = 3000;
         app.listen(PORT, ()=>{
             console.log(`server is running on port ${PORT}.`);
